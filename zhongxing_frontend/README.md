@@ -1,4 +1,4 @@
-# hadoop_testing_front
+# zhongxing_frontend
 
 ## Project setup
 ```
@@ -22,8 +22,5 @@ npm run lint
 
 ### Deploy Command
 ```bash
-npm run build &&\
-ssh cloud002 "rm -rf /var/www/wgs/hadoop_testing" &&\
-scp -r ~/Downloads/xinhe/hadoop_testing_front/dist cloud002:/var/www/wgs/hadoop_testing &&\
-rm -rf ~/Downloads/xinhe/hadoop_testing_front/dist
+npm run build
 ```
