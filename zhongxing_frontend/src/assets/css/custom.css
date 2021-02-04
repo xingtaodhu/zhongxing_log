@@ -1,0 +1,33 @@
+* {
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+}
+
+.el-menu--popup {
+    min-width: 80px;
+}
+
+.el-dialog {
+    border-radius: 5px;
+}
+
+.el-table .cell {
+    line-height: 18px;
+}
+
+.el-header {
+    padding: 0;
+}
+
+.el-footer {
+    padding: 20px 0 0;
+}
+
+.el-main {
+    padding: 0;
+    height: calc(100vh - 60px);
+}
+
+.el-message-box {
+    vertical-align: top;
+    margin-top: 15%;
+}

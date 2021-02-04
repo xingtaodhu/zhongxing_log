@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>${constants.getSystemName()}</title>
+    <link rel="stylesheet" href="${ctxPath}/assets/common/libs/layui/css/layui.css?v=${constants.getReleaseVersion()}"/>
+    <link rel="stylesheet" href="${ctxPath}/assets/common/module/admin.css?v=${constants.getReleaseVersion()}"/>
+    <style>
+        .numberInfoSubTitle {
+            color: rgba(0, 0, 0, .45);
+            font-size: 14px;
+            height: 22px;
+            line-height: 22px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            word-break: break-all;
+        }
+
+        .numberInfoValue {
+            color: rgba(0, 0, 0, .85);
+            font-size: 24px;
+            margin-top: 10px;
+            height: 32px;
+            line-height: 32px;
+        }
+
+        .numberInfoSuffix {
+            color: rgba(0, 0, 0, .65);
+            font-size: 16px;
+            font-style: normal;
+            margin-left: 4px;
+            line-height: 32px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- 加载动画，移除位置在common.js中 -->
+<div class="page-loading">
+    <div class="ball-loader">
+        <span></span><span></span><span></span><span></span>
+    </div>
+</div>
+
+<!-- 正文开始 -->
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+
+        <div class="layui-col-xs12 layui-col-md4" style="display: none;">
+            <div class="layui-card" style="">
+                <div class="layui-card-header">实时调度情况</div>
+                <div class="layui-card-body">
+                    <div class="layui-row">
+                        <div class="layui-col-xs12 layui-col-sm6 layui-col-lg3 text-center">
+                            <div class="numberInfoSubTitle">今日调度次数</div>
+                            <div class="numberInfoValue">
+                                4,543<em class="numberInfoSuffix">次</em>
+                            </div>
+                        </div>
+                        <div class="layui-col-xs12 layui-col-sm6 layui-col-lg3 text-center">
+                            <div class="numberInfoSubTitle">送货任务完成率</div>
+                            <div class="numberInfoValue">92%</div>
+                        </div>
+                        <div class="layui-col-xs12 layui-col-sm6 layui-col-lg3 text-center">
+                            <div class="numberInfoSubTitle">总计送货时间</div>
+                            <div class="numberInfoValue">00:57:10</div>
+                        </div>
+                        <div class="layui-col-xs12 layui-col-sm6 layui-col-lg3 text-center">
+                            <div class="numberInfoSubTitle">送货交易金额</div>
+                            <div class="numberInfoValue">
+                                23,434<em class="numberInfoSuffix">元</em>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="text-align: center;padding: 30px 0 10px 0;">
+                        <img src="https://gw.alipayobjects.com/zos/rmsportal/HBWnDEUXCnGnGrRfrpKa.png"
+                             style="max-height: 437px; max-width: 100%;" alt="map">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-col-xs12 layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header" style="display: none;">物流调度情况预测</div>
+                <div class="layui-card-body" style="height: 400px;overflow: hidden;display:none">
+                    <div id="hdqkyc" style="width: 90%;height: 400px;"></div>
+                </div>
+            </div>
+            <div class="layui-card">
+                <div class="layui-card-header" style="display: none">系统运行情况</div>
+                <div class="layui-card-body" style="height: 400px;overflow: hidden;display: none;">
+                    <div id="hjxl" style="width: 90%;height: 400px;margin-top: -20px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-col-xs12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div class="layui-tab layui-tab-brief" lay-filter="tabZZT">
+                        <ul class="layui-tab-title">
+                            <li class="layui-this">报错趋势</li>
+                            <!--<li>调度次数</li>-->
+                        </ul>
+                        <div class="layui-tab-content">
+                            <div class="layui-tab-item layui-show">
+                                <div class="layui-row layui-col-space30">
+                                    <div class="layui-col-xs12 layui-col-md8">
+                                        <div id="xse" style="height: 300px;margin-top: 20px;"></div>
+                                    </div>
+                                    <div class="layui-col-xs12 layui-col-md4">
+                                        <table class="layui-table" lay-skin="nob">
+                                            <colgroup>
+                                                <col width="50">
+                                                <col>
+                                                <col width="96">
+                                            </colgroup>
+                                            <thead>
+                                            <tr style="background: none;color: #333;">
+                                                <th colspan="3">模块报错排名</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td><span class="layui-badge layui-bg-cyan">1</span></td>
+                                                <td>AAA</td>
+                                                <td>378,776</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="layui-badge layui-bg-cyan">2</span></td>
+                                                <td>MDU</td>
+                                                <td>353,934</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="layui-badge layui-bg-cyan">3</span></td>
+                                                <td>AS</td>
+                                                <td>340,578</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="layui-badge layui-bg-gray">4</span></td>
+                                                <td>CCS</td>
+                                                <td>323,234</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="layui-badge layui-bg-gray">5</span></td>
+                                                <td>SA</td>
+                                                <td>323,234</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="layui-badge layui-bg-gray">6</span></td>
+                                                <td>GBSG</td>
+                                                <td>323,234</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="layui-badge layui-bg-gray">7</span></td>
+                                                <td>VOD</td>
+                                                <td>323,234</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-tab-item">
+                                <div class="layui-row layui-col-space30">
+                                    <div class="layui-col-xs12 layui-col-md8">
+                                        <div id="fwl" style="height: 300px;margin-top: 20px;"></div>
+                                    </div>
+                                    <div class="layui-col-xs12 layui-col-md4">
+                                        <table class="layui-table" lay-skin="nob">
+                                            <colgroup>
+                                                <col width="50">
+                                                <col>
+                                                <col width="96">
+                                            </colgroup>
+                                            <thead>
+                                            <tr style="background: none;color: #333;">
+                                                <th colspan="3">门店访问量排名</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td><span class="layui-badge layui-bg-cyan">1</span></td>
+                                                <td>工专路 0 号店</td>
+                                                <td>323,234</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="layui-badge layui-bg-cyan">2</span></td>
+                                                <td>工专路 1 号店</td>
+                                                <td>323,234</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="layui-badge layui-bg-cyan">3</span></td>
+                                                <td>工专路 2 号店</td>
+                                                <td>323,234</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="layui-badge layui-bg-gray">4</span></td>
+                                                <td>工专路 4 号店</td>
+                                                <td>323,234</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="layui-badge layui-bg-gray">5</span></td>
+                                                <td>工专路 5 号店</td>
+                                                <td>323,234</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="layui-badge layui-bg-gray">6</span></td>
+                                                <td>工专路 6 号店</td>
+                                                <td>323,234</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="layui-badge layui-bg-gray">7</span></td>
+                                                <td>工专路 7 号店</td>
+                                                <td>323,234</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- js部分 -->
+@/* 加入contextPath属性和session超时的配置 */
+<script type="text/javascript">
+    var Feng = {
+        ctxPath: "${ctxPath}",
+        version: '${constants.getReleaseVersion()}'
+    };
+</script>
+
+<script type="text/javascript" src="${ctxPath}/assets/common/libs/layui/layui.js?v=${constants.getReleaseVersion()}"></script>
+<script type="text/javascript" src="${ctxPath}/assets/common/js/common.js?v=${constants.getReleaseVersion()}"></script>
+<script src="${ctxPath}/assets/common/libs/echarts/echarts.min.js?v=${constants.getReleaseVersion()}"></script>
+<script src="${ctxPath}/assets/common/libs/echarts/echartsTheme.js?v=${constants.getReleaseVersion()}"></script>
+
+<script>
+    layui.use(['layer', 'element'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var element = layui.element;
+
+        // 渲染活动情况预测
+        var myCharts = echarts.init(document.getElementById('hdqkyc'), myEchartsTheme);
+        var mData = [50, 100, 150, 80, 120, 150, 200, 250, 220, 250, 300, 350, 400, 380, 440, 450, 500, 550, 500];
+        // var option = {
+        //     title: {
+        //         text: '有望达到预期',
+        //         subtext: '目标评估',
+        //         textStyle: {
+        //             color: '#000'
+        //         }
+        //     },
+        //     tooltip: {
+        //         trigger: "axis"
+        //     },
+        //     xAxis: [{
+        //         type: "category",
+        //         boundaryGap: !1,
+        //         data: ["06:00", "06:30", "07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00"]
+        //     }],
+        //     yAxis: [{
+        //         type: "value"
+        //     }],
+        //     series: [{
+        //         name: "金额",
+        //         type: "line",
+        //         smooth: !0,
+        //         itemStyle: {
+        //             normal: {
+        //                 areaStyle: {
+        //                     type: "default"
+        //                 }
+        //             }
+        //         },
+        //         data: mData
+        //     }]
+        // };
+        var	option = {
+            backgroundColor: '#ccc',	// 背景颜色
+            title: {                    // 图表标题
+                text: "模块关系网络",           // 标题文本
+                left : '3%',                    // 标题距离左侧边距
+                top : '3%',                     // 标题距顶部边距
+                textStyle : {                       // 标题样式
+                    color : '#000',                     // 标题字体颜色
+                    fontSize : '30',                    // 标题字体大小
+                }
+            },
+            tooltip: {                  // 提示框的配置
+                formatter: function(param) {
+                    if (param.dataType === 'edge') {
+                        //return param.data.category + ': ' + param.data.target;
+                        return param.data.target;
+                    }
+                    //return param.data.category + ': ' + param.data.name;
+                    return param.data.name;
+                }
+            },
+
+            series: [{
+                type: "graph",          // 系列类型:关系图
+                top: '10%',             // 图表距离容器顶部的距离
+                roam: true,             // 是否开启鼠标缩放和平移漫游。默认不开启。如果只想要开启缩放或者平移，可以设置成 'scale' 或者 'move'。设置成 true 为都开启
+                focusNodeAdjacency: true,   // 是否在鼠标移到节点上的时候突出显示节点以及节点的边和邻接节点。[ default: false ]
+                force: {                // 力引导布局相关的配置项，力引导布局是模拟弹簧电荷模型在每两个节点之间添加一个斥力，每条边的两个节点之间添加一个引力，每次迭代节点会在各个斥力和引力的作用下移动位置，多次迭代后节点会静止在一个受力平衡的位置，达到整个模型的能量最小化。
+                    // 力引导布局的结果有良好的对称性和局部聚合性，也比较美观。
+                    repulsion: 1000,            // [ default: 50 ]节点之间的斥力因子(关系对象之间的距离)。支持设置成数组表达斥力的范围，此时不同大小的值会线性映射到不同的斥力。值越大则斥力越大
+                    edgeLength: [150, 100]      // [ default: 30 ]边的两个节点之间的距离(关系对象连接线两端对象的距离,会根据关系对象值得大小来判断距离的大小)，
+                                                // 这个距离也会受 repulsion。支持设置成数组表达边长的范围，此时不同大小的值会线性映射到不同的长度。值越小则长度越长。如下示例:
+                                                // 值最大的边长度会趋向于 10，值最小的边长度会趋向于 50      edgeLength: [10, 50]
+                },
+                layout: "force",            // 图的布局。[ default: 'none' ]
+                                            // 'none' 不采用任何布局，使用节点中提供的 x， y 作为节点的位置。
+                                            // 'circular' 采用环形布局;'force' 采用力引导布局.
+                // 标记的图形
+                //symbol: "path://M19.300,3.300 L253.300,3.300 C262.136,3.300 269.300,10.463 269.300,19.300 L269.300,21.300 C269.300,30.137 262.136,37.300 253.300,37.300 L19.300,37.300 C10.463,37.300 3.300,30.137 3.300,21.300 L3.300,19.300 C3.300,10.463 10.463,3.300 19.300,3.300 Z",
+                symbol: 'circle',
+                lineStyle: {            // 关系边的公用线条样式。其中 lineStyle.color 支持设置为'source'或者'target'特殊值，此时边会自动取源节点或目标节点的颜色作为自己的颜色。
+                    normal: {
+                        color: '#000',          // 线的颜色[ default: '#aaa' ]
+                        width: 1,               // 线宽[ default: 1 ]
+                        type: 'solid',          // 线的类型[ default: solid ]   'dashed'    'dotted'
+                        opacity: 0.5,           // 图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。[ default: 0.5 ]
+                        curveness: 0            // 边的曲度，支持从 0 到 1 的值，值越大曲度越大。[ default: 0 ]
+                    }
+                },
+                label: {                // 关系对象上的标签
+                    normal: {
+                        show: true,                 // 是否显示标签
+                        position: "inside",         // 标签位置:'top''left''right''bottom''inside''insideLeft''insideRight''insideTop''insideBottom''insideTopLeft''insideBottomLeft''insideTopRight''insideBottomRight'
+                        textStyle: {                // 文本样式
+                            fontSize: 16
+                        }
+                    }
+                },
+                edgeLabel: {                // 连接两个关系对象的线上的标签
+                    normal: {
+                        show: true,
+                        textStyle: {
+                            fontSize: 14
+                        },
+                        formatter: function(param) {        // 标签内容
+                            return param.data.category;
+                        }
+                    }
+                },
+                data: [{
+                    name: "AAA",
+                    draggable: true,                // 节点是否可拖拽，只在使用力引导布局的时候有用。
+                    symbolSize: [100, 100],         // 关系图节点标记的大小，可以设置成诸如 10 这样单一的数字，也可以用数组分开表示宽和高，例如 [20, 10] 表示标记宽为20，高为10。
+                    itemStyle: {
+                        color: '#000'				// 关系图节点标记的颜色
+                    },
+                    category: "收入支出分析"         // 数据项所在类目的 index。
+                }, {
+                    name: "MDU",
+                    draggable: true,
+                    symbolSize: [80, 80],
+                    itemStyle: {
+                        color: '#0000ff'
+                    },
+                    category: "收入+"
+                }, {
+                    name: "AS",
+                    draggable: true,
+                    symbolSize: [80, 80],
+                    itemStyle: {
+                        color: '#ff0000'
+                    },
+                    category: "支出-"
+                }, {
+                    name: "CCS",
+                    draggable: true,
+                    symbolSize: [80, 80],
+                    itemStyle: {
+                        color: '#FF6EB4'
+                    },
+                    category: "支出-"
+                }, {
+                    name: "SA",
+                    draggable: true,
+                    symbolSize: [80, 80],
+                    itemStyle: {
+                        color: '#00ff00'
+                    },
+                    category: "剩余="
+                },{
+                    name: "GBSG",
+                    draggable: true,
+                    symbolSize: [80, 80],
+                    itemStyle: {
+                        color: '#8B1A1A'
+                    },
+                    category: "剩余="
+                },{
+                    name: "VOD",
+                    draggable: true,
+                    symbolSize: [80, 80],
+                    itemStyle: {
+                        color: '#8B8B00'
+                    },
+                    category: "剩余="
+                }],
+                categories: [{              // 节点分类的类目，可选。如果节点有分类的话可以通过 data[i].category 指定每个节点的类目，类目的样式会被应用到节点样式上。图例也可以基于categories名字展现和筛选。
+                    name: "收入支出分析"            // 类目名称，用于和 legend 对应以及格式化 tooltip 的内容。
+                }, {
+                    name: ""
+                }, {
+                    name: "支出-"
+                }, {
+                    name: "支出-"
+                }, {
+                    name: "剩余="
+                }],
+                links: [{                   // 节点间的关系数据
+                    target: "AAA",
+                    source: "AS",
+                    category: ""              // 关系对象连接线上的标签内容
+                }, {
+                    target: "CCS",
+                    source: "AS",
+                    category: ""
+                }, {
+                    target: "VOD",
+                    source: "MDU",
+                    category: ""
+                }, {
+                    target: "SA",
+                    source: "CMS",
+                    category: ""
+                }]
+            }],
+
+            animationEasingUpdate: "quinticInOut",          // 数据更新动画的缓动效果。[ default: cubicOut ]    "quinticInOut"
+            animationDurationUpdate: 100                    // 数据更新动画的时长。[ default: 300 ]
+        };
+        myCharts.setOption(option);
+
+        // // 动态改变图表1数据
+        // setInterval(function () {
+        //     for (var i = 0; i < mData.length; i++) {
+        //         mData[i] += (Math.random() * 50 - 25);
+        //         if (mData[i] < 0) {
+        //             mData[i] = 0;
+        //         }
+        //     }
+        //     myCharts.setOption({
+        //         series: [{
+        //             data: mData
+        //         }]
+        //     });
+        // }, 1000);
+
+
+        var myCharts2 = echarts.init(document.getElementById('hjxl'), myEchartsTheme);
+        var modules = [
+            {name:"AS",value:1},
+            {name:"CCS",value:2},
+            {name:"AAA",value:3},
+            {name:"MDU",value:4},
+            {name:"VOD",value:5},
+            {name:"GBSG",value:6},
+            {name:"SA",value:7},
+        ];
+        var links = [
+            {source:"AS",target:"AAA",value:544},
+            {source:"AS",target:"CCS",value:543},
+            {source:"MDU",target:"VOD",value:70},
+            {source:"MDU",target:"SA",value:70},
+            {source:"MDU",target:"GBSG",value:70},
+            {source:"VOD",target:"AAA",value:70},
+            {source:"VOD",target:"GBSG",value:70},
+            {sousrce:"CCS",target:"AAA",value:70},
+            {source:"CCS",target:"GBSG",value:70}
+        ];
+        modules.forEach(function (node) {
+            node.symbolSize = 10;
+            node.label = {
+                normal: {
+                    show: node.symbolSize > 2,
+                    fontSize :10
+                }
+            };
+        });
+        function weight(link) {
+            if(link.value=="undefined"){
+                return 1;
+            }else{
+                return 10;
+            }
+        };
+
+        links.forEach(function (link) {
+            link.lineStyle={
+                normal:{
+                    width:weight(link),
+                    opacity:0.5
+                }
+            };
+        });
+        // var option2 = {
+        //     tooltip: {
+        //         formatter: "{a} <br/>{b} : {c}%"
+        //     },
+        //     series: [
+        //         {
+        //             name: '系统运行状态',
+        //             type: 'gauge',
+        //             detail: {formatter: '{value}%'},
+        //             data: [{value: 80, name: '利用率'}]
+        //         }
+        //     ]
+        // };
+        var option2 = {
+            backgroundColor: '#ccc',	// 背景颜色
+            title: {                    // 图表标题
+                text: "模块关系弦图",           // 标题文本
+                left : '3%',                    // 标题距离左侧边距
+                top : '3%',                     // 标题距顶部边距
+                textStyle : {                       // 标题样式
+                    color : '#000',                     // 标题字体颜色
+                    fontSize : '30',                    // 标题字体大小
+                }
+            },
+            animationDurationUpdate: 1500,
+            animationEasingUpdate: 'quinticInOut',
+            series : [
+                {
+                    name: '模块',
+                    type: 'graph',
+                    layout: 'circular',
+                    circular: {
+                        rotateLabel: true
+                    },
+                    data: modules,
+                    links: links,
+                    roam: true,
+                    label: {
+                        normal: {
+                            position: 'right',
+                            formatter: '{b}'
+                        }
+                    },
+                    itemStyle:{
+                        normal: {
+                            color:'#0f3475'
+                        }
+                    },
+                    lineStyle: {
+                        normal: {
+                            color: {
+                                type: 'linear',
+                                x: 0,
+                                y: 0,
+                                x2: 0,
+                                y2: 1,
+                                colorStops: [{
+                                    offset: 0, color: '#1551c2'
+                                }, {
+                                    offset: 1, color: '#7be0ff'
+                                }],
+                                globalCoord: false
+                            },
+                            curveness: 0.3,
+                            opacity:0.2
+                        }
+                    }
+                }
+            ]
+        };
+        myCharts2.setOption(option2);
+
+        // 渲染销售额图表
+        var myCharts3 = echarts.init(document.getElementById('xse'), myEchartsTheme);
+        var option3 = {
+            tooltip: {},
+            grid: {
+                left: '0',
+                right: '0',
+                bottom: '0',
+                containLabel: true
+            },
+            xAxis: {
+                data: ['4.6', '4.7', '4.8', '4.9', '4.10', '4.11', '4.12', '4.13', '4.14', '4.15', '4.16', '4.17']
+            },
+            yAxis: {},
+            series: [{
+                type: 'bar',
+                data: [726, 1013, 690, 892, 982, 570, 536, 546, 988, 1002, 206, 506],
+                barMaxWidth: 45
+            }]
+        };
+        myCharts3.setOption(option3);
+
+        // 渲染访问量图表
+        var myCharts4 = echarts.init(document.getElementById('fwl'), myEchartsTheme);
+        var option4 = {
+            title: {
+                text: '调度次数趋势',
+                textStyle: {
+                    color: '#000',
+                    fontSize: 14
+                }
+            },
+            tooltip: {},
+            grid: {
+                left: '0',
+                right: '0',
+                bottom: '0',
+                containLabel: true
+            },
+            xAxis: {
+                data: ['4.6', '4.7', '4.8', '4.9', '4.10', '4.11', '4.12', '4.13', '4.14', '4.15', '4.16', '4.17']
+            },
+            yAxis: {},
+            series: [{
+                type: 'bar',
+                data: [558, 856, 880, 1325, 982, 856, 655, 546, 988, 985, 568, 302],
+                barMaxWidth: 45
+            }]
+        };
+        myCharts4.setOption(option4);
+
+        // 切换选项卡重新渲染
+        element.on('tab(tabZZT)', function (data) {
+            if (data.index == 0) {
+                myCharts3.resize();
+            } else {
+                myCharts4.resize();
+            }
+        });
+
+        // 窗口大小改变事件
+        window.onresize = function () {
+            myCharts.resize();
+            myCharts2.resize();
+            myCharts3.resize();
+            myCharts4.resize();
+        };
+
+    });
+</script>
+</body>
+
+</html>
